@@ -3,13 +3,14 @@ set $super Mod4
 set $alt Mod1
 
 # set font
-font pango: Noto Sans 8
+font pango: Noto Sans 12
 
 # Use Mouse+$super to drag floating windows to their wanted position
 floating_modifier $super
 
 #autostart
-exec --no-startup-id hsetroot -center ~/.wallpaper.png
+exec_always xrandr --output eDP-1 --mode 2048x1152
+exec --no-startup-id feh --bg-scale ~/.wallpaper.png
 exec --no-startup-id xsettingsd &
 exec --no-startup-id compton -b
 
@@ -18,10 +19,11 @@ bindsym $super+Return exec i3-sensible-terminal
 
 # start dmenu (a program launcher)
 bindsym $super+Shift+d exec i3-dmenu-desktop --dmenu="dmenu -i -fn 'Noto Sans:size=8'"
-bindsym $super+d exec rofi -lines 12 -padding 18 -width 60 -location 0 -show drun -sidebar-mode -columns 3 -font 'Noto Sans 8'
+bindsym $super+d exec rofi -lines 12 -padding 18 -width 60 -location 0 -show drun -sidebar-mode -columns 3 -font 'Noto Sans 12'
 
 # common apps keybinds
-bindsym Print exec scrot 'Cheese_%a-%d%b%y_%H.%M.png' -e 'viewnior ~/$f'
+bindsym Print exec scrot ~/Pictures/%a-%d%b%y_%H.%M.png #-e 'viewnior ~/$f'
+bindsym Shift+Print exec scrot -s ~/Pictures/%a-%d%b%y_%H.%M.png #-e 'viewnior ~/$f'
 bindsym $super+l exec i3lock -i ~/.wallpaper.png
 bindsym $super+Shift+w exec firefox
 bindsym $super+Shift+f exec thunar;workspace 3;focus
@@ -63,8 +65,8 @@ bindsym $super+v split v
 # enter fullscreen mode for the focused container
 bindsym $super+f fullscreen toggle
 
-# change container layout split
-bindsym $super+s layout toggle split
+# change container layout stacking
+bindsym $super+s layout stacking
 
 # toggle tiling / floating
 bindsym $super+space floating toggle
@@ -75,12 +77,12 @@ bindsym $super+Shift+space focus mode_toggle
 # switch to workspace
 bindsym $alt+Control+Right workspace next
 bindsym $alt+Control+Left workspace prev
-bindsym $super+1 workspace 1
-bindsym $super+2 workspace 2
-bindsym $super+3 workspace 3
-bindsym $super+4 workspace 4
-bindsym $super+5 workspace 5
-bindsym $super+6 workspace 6
+bindsym $alt+1 workspace 1
+bindsym $alt+2 workspace 2
+bindsym $alt+3 workspace 3
+bindsym $alt+4 workspace 4
+bindsym $alt+5 workspace 5
+bindsym $alt+6 workspace 6
 
 # move focused container to workspace
 bindsym $super+Shift+1 move container to workspace 1
@@ -124,14 +126,14 @@ bar {
 
 # window rules, you can find the window class using xprop
 for_window [class=".*"] border pixel 4
-assign [class=URxvt] 1
-assign [class=Firefox|Transmission-gtk] 2
+assign [class=URxvt|X-terminal-emulator] 1
+assign [class=Google-chrome] 2
 assign [class=Thunar|File-roller] 3
 assign [class=Geany|Evince|Gucharmap|Soffice|libreoffice*] 4
 assign [class=Audacity|Vlc|mpv|Ghb|Xfburn|Gimp*|Inkscape] 5
 assign [class=Lxappearance|System-config-printer.py|Lxtask|GParted|Pavucontrol|Exo-helper*|Lxrandr|Arandr] 6
 for_window [class=Viewnior|feh|Audacious|File-roller|Lxappearance|Lxtask|Pavucontrol] floating enable
-for_window [class=URxvt|Firefox|Geany|Evince|Soffice|libreoffice*|mpv|Ghb|Xfburn|Gimp*|Inkscape|Vlc|Lxappearance|Audacity] focus
+for_window [class=X-terminal-emulator|Google-chrome|URxvt|Firefox|Geany|Evince|Soffice|libreoffice*|mpv|Ghb|Xfburn|Gimp*|Inkscape|Vlc|Lxappearance|Audacity] focus
 for_window [class=Xfburn|GParted|System-config-printer.py|Lxtask|Pavucontrol|Exo-helper*|Lxrandr|Arandr] focus
 
 # colour of border, background, text, indicator, and child_border
